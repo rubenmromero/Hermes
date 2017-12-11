@@ -196,15 +196,13 @@ def checkAMIs():
     '''
     
     amis = ec2_client.describe_images(Filters=[ { 'Name': 'tag-key', 'Values': [ "deleteAmi" ] } ])
-    if not amis['Images']:
-        return True
-        
-    for ami in amis["Images"]:
-        if DEBUG:   print "[checkAMIs] La AMI {0} tiene los tags {1}".format(ami["ImageId"], ami["Tags"])
-            
-        for tag in ami["Tags"]:
-            if tag['Key'] == "deleteAmi":
-                cronAMIExec(tag['Value'], ami["ImageId"], "delete")
+    if amis is not None:
+        for ami in amis["Images"]:
+            if DEBUG:   print "[checkAMIs] La AMI {0} tiene los tags {1}".format(ami["ImageId"], ami["Tags"])
+
+            for tag in ami["Tags"]:
+                if tag['Key'] == "deleteAmi":
+                    cronAMIExec(tag['Value'], ami["ImageId"], "delete")
 
     return True
 
@@ -230,15 +228,13 @@ def checkSnapshots():
     '''
     
     snaps = ec2_client.describe_snapshots(Filters=[ { 'Name': 'tag-key', 'Values': [ "deleteSnapshot" ] } ])
-    if not snaps['Snapshots']:
-        return True
-        
-    for snap in snaps["Snapshots"]:
-        if DEBUG:   print "[checkSnapshots] El snap {0} tiene los tags {1}".format(snap["SnapshotId"], snap["Tags"])
-            
-        for tag in snap["Tags"]:
-            if tag['Key'] == "deleteSnapshot":
-                cronSnapExec(tag['Value'], snap["SnapshotId"], "delete")
+    if snaps is not None:
+        for snap in snaps["Snapshots"]:
+            if DEBUG:   print "[checkSnapshots] El snap {0} tiene los tags {1}".format(snap["SnapshotId"], snap["Tags"])
+
+            for tag in snap["Tags"]:
+                if tag['Key'] == "deleteSnapshot":
+                    cronSnapExec(tag['Value'], snap["SnapshotId"], "delete")
 
     return True
 
