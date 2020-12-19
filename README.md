@@ -4,7 +4,7 @@ Hermes is an AWS Lambda function and its proper IAM configurations to make 'Cron
 
 ## Global Idea
 
-The main idea of this project is to be able to perform administrator and repetitive tasks in your entire infrestructure via tags. With this Lambda function you could, for example, shut down a development environment at 6PM on weekdays, writing a tag named "stopTime" with the value "0 18 * * 1-5" on every instance involved.
+The main idea of this project is to be able to perform administrator and repetitive tasks in your entire infrestructure via tags. With this Lambda function you could, for example, shut down a development environment at 6PM on business days, writing a tag named "stopTime" with the value "0 18 * * 1-5" on every instance involved.
 
 This project is its very early days, there are a lot of work to do yet :)
 
@@ -12,13 +12,13 @@ This project is its very early days, there are a lot of work to do yet :)
 
 You must write a proper tag in resources in order to perform some administrator task, such as stop or start an instance, generate snapshots from EBSs, etc.
 
-The name of the tag is the action, and the value is a cron expression, including wildcards, numbers, ranges and enumerations. Some examples are:
+The name of the tag is the action and the value is a cron expression, including wildcards, numbers, ranges and enumerations. Some examples are:
 
-Tage Name | Tag Value | Description
+Tag Name | Tag Value | Description
 ---- | ---- | ---
-startInstance | * 9 * * 1-5 | (weekdays at 9AM, start my instances)
-stopInstance | * 18 * * * |  (my instances must be stopped at 6PM)
-createSnapshot | * 12 7,14,21 * * | (at 12 AM, the days 7, 14 and 21 of every month, create a snapshot)
+startInstance | * 9 * * 1-5 | Business days at 9AM, start my instances
+stopInstance | * 18 * * * | My instances must be stopped at 6PM
+createSnapshot | * 12 7,14,21 * * | At 12 AM, the days 7, 14 and 21 of every month, create a snapshot
 
 ## Set up a new Lambda Function.
 
